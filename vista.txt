@@ -1,0 +1,5 @@
+aracterística	EJS (Express)	            Django Templates
+Sintaxis	    <%= variable %> 	        {{ variable }}
+Lógica	        <% if () { %>	            {% if condition %}
+Ciclos	        <% arr.forEach(...) %>	    {% for item in list %}
+Inclusión	    <%- include('file') %>	    {% include 'file.html' %}

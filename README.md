@@ -1,3 +1,13 @@
 # CRUD con node.js
 
-Acá se coloca como ejecutar el proyectogit
+## Instalación
+``` shell
+npm install
+
+```
+## Ejecutar
+```shell
+
+npm run dev
+
+```

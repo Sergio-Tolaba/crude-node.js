@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/">Inicio</a>
+        <a href="/productos">Productos</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Productos</h1>
+      <p>Pagina Privada, voy al controlador.productos.js</p>
+      <!-- <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr>
+          <th>Producto 1</th>
+          <th>Descripcion del Producto 1</th>
+        </tr> 
+        <% productos.forEach(producto=>{%>
+        <tr>
+          <th><%= producto.title %></th>
+          <th><%= producto.description %></th>
+        </tr>
+
+        <%}) %>
+      </tbody>
+    </table> -->
+      <section class="products">
+        <% productos.forEach(producto=>{%>
+        <article>
+          <h2><%= producto.title %></h2>
+          <p><%= producto.description %></p>
+        </article>
+        <%}) %>
+      </section>
+    </main>
+
+    <footer>
+      <small> Copyright 2025 </small>
+    </footer>
+  </body>
+</html>
