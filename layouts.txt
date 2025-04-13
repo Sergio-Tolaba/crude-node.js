@@ -1,0 +1,47 @@
+npm i express-ejs-layouts
+Voy al entry point que es el index.js e importo el módulo
+
+En views index.ejs borro casi todo
+<!-- Vamos a la carpeta "private" y copiamos todo el contenido del index.html y lo
+llevamos acá a la carpeta "views" y en el index.ejs -->
+<!-- En index.ejs y en productos.ejs: hay código que se repite Ej <!DOCTYPE..,html,head,header(nav), footer. Solucion: creo carpeta "partials   " -->
+
+Todo esto lo borro porque se repite. Ya toma todo del layout.ejs
+
+Borro:
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privado</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+
+  Acá conservo y el final también lo borro
+
+  </body>
+</html>
+
+
+Es decir que lo que se conserva en el index.ejs es lo siguiente
+
+
+    <%- include('partials/header') %>
+    <main>
+      
+      <h1>Inicio</h1>
+    </main>
+
+ 
+    <%- include('partials/footer') %>
+
+********************************************************
+    Si se inspecciona el Inicio vemos que el body incluye 
+    header, main y footer
+
+********************************************
+Resumen: Todo lo que se repite va dentro del layout.ejs
+
+Según lo que se requiera se irán agregando distintos layauts para por ejemplo Uno para administración, otro para oferta de productos, otro para login, etc
