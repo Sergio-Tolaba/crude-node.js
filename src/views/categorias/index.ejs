@@ -1,0 +1,26 @@
+<!-- Sabemos que acá sólo hay que agregar lo que iría dentro del main -->
+<h1>Listado de Categorías</h1>
+<!-- Cómo renderizo esta pagina, desde el controlador y cambio res.send('Listado de Categorias') -->
+<table>
+  <!-- cabecera -->
+  <thead>
+    <!-- filas -->
+    <tr>
+      <!-- celdas de las cabecera -->
+      <th>Nombre</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- array de categorias.forEach para recorrerlo //No puedo mezclar js y html-->
+    <% categorias.forEach(categoria=>{ %>
+    <tr>
+      <td>
+        <a href="/categorias/<%= categoria.id %>"><%= categoria.nombre %></a>
+      </td>
+    </tr>
+    <%}) %>
+    <!-- <tr>
+      <td>Se completará dinamicamente</td>
+    </tr> -->
+  </tbody>
+</table>

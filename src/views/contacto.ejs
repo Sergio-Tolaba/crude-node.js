@@ -1,0 +1,21 @@
+<h1>Contacto</h1>
+<!-- Formulario el 99% es por método post -->
+<form action="/contacto" method="post">
+  <div>
+    <label for="nombre">Nombre:</label>
+    <!-- comando input:text  y for="nombre" luego id="nombre" y lo que reibiré
+     cuando el form se envie será el name="nombre" lo que recibiré. Puede ser name="diferente"-->
+    <input type="text" name="nombre" id="nombre" />
+  </div>
+  <div>
+    <label for="correo">Correo</label>
+    <input type="correo" name="email" id="correo" />
+  </div>
+  <div>
+    <label for="mensaje">Mensaje</label>
+    <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
+  </div>
+  <button type="submit">Enviar</button>
+</form>
+<!-- Ahora voy al entry point es decir al index.js para indicarle la ruta(copio y pego) También agrego un Middelware para que tome los valores ingresados en el formulario y los muestre en consola como un objeto: { nombre: 'juan', email: 'juan@gmail.com', mensaje: 'Text -....' }
+ Finalmente instalo un módulo en contacto.controller.js para recibir esta info del form en un correo con el comando $ npm i nodemailer ver la doc: https://nodemailer.com/ -->

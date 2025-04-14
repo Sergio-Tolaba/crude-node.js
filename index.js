@@ -5,6 +5,7 @@ const path = require("path");
 const layouts = require("express-ejs-layouts");
 
 const app = express(); //app es el servidor y es una instancia de express
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public"))); //aunque funcionó todo bien la ruta relativa, conviene colocar rutas absolutas y usamos join porque quiero unir
 
 app.set("view engine", "ejs"); //Antes $ npm i ejs // Ahora que use dicho motor de vistas
@@ -18,7 +19,9 @@ app.use(mainRouter);
 
 //app.use(require('./src/routes/productos.router'));Agrego prefijo: "/producto", require..
 //luego simplifico productos.router.js
-app.use("/productos", require("./src/routes/productos.router"));
+app.use("/categorias", require("./src/routes/categorias.router"));
+app.use("/productos", require("./src/routes/productos.router")); //Copio y pego:Contacto
+app.use("/contacto", require("./src/routes/contacto.router"));
 const PORT = process.env.PORT || 3001; //Hay que apagar (Ctrl+C) y volver a encender el servidor: $node index.js
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
