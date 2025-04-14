@@ -7,6 +7,9 @@
 const fs = require("fs");
 const path = require("path");
 let categorias = []; //Array vacío+En store(save c/categoria=uso file siste y path)
+
+const model = rquire("../models/Category");
+
 //Create
 const create = (req, res) => {
   try {
@@ -16,24 +19,25 @@ const create = (req, res) => {
   } catch (error) {
     categorias = [];
   }
+
   res.render("categorias/create"); //Renderizaré 1formulario en las views: categorias.create.ejs
 };
 //Recibimos la info del form Create para guardar dicha info en el array
 const store = (req, res) => {
-  const { nombre } = req.body; //Extraigo el nombre de la info del form create Ej
-  //console.log(nombre);
-  //Categoria 4
-  const categoria = {
-    //Creo un objeto: Nueva Categoria
-    id: Date.now(),
-    nombre, //Asigno el nombre que agregó el frontend(Cliente) Ej Categoria 4
-  };
-  categorias.push(categoria); //Agrego al final del array la nueva categoría
-  //Guardaremos el archivo de forma sincrónica(luego veremos la forma ascincrónica)
-  fs.writeFileSync(
-    path.resolve(__dirname, "../../categorias.json"),
-    JSON.stringify(categorias)
-  );
+  const { name } = req.body; //Extraigo el nombre de la info del form create Ej
+  //En db como sqlite nombre ahora es name
+  //TODO ESTO SE HACE PARA EL ARRAY
+  // const categoria = {
+  //   //Creo un objeto: Nueva Categoria//En db esto se hace en models
+  //   id: Date.now(),
+  //   nombre, //Asigno el nombre que agregó el frontend(Cliente) Ej Categoria 4
+  // };
+  // categorias.push(categoria); //Agrego al final del array la nueva categoría
+  // //Guardaremos el archivo de forma sincrónica(luego veremos la forma ascincrónica)
+  // fs.writeFileSync(
+  //   path.resolve(__dirname, "../../categorias.json"),
+  //   JSON.stringify(categorias)
+  // );
   res.redirect("/categorias"); //Paso del form Create a la pagina de Listar Categorias
 }; //Veo la Categoría 4 pero sólo queda en memoria RAM
 
