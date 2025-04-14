@@ -1,6 +1,7 @@
 <!-- Sabemos que acá sólo hay que agregar lo que iría dentro del main -->
 <h1>Listado de Categorías</h1>
 <!-- Cómo renderizo esta pagina, desde el controlador y cambio res.send('Listado de Categorias') -->
+<a href="/categorias/create">Crear una Categoría</a>
 <table>
   <!-- cabecera -->
   <thead>
@@ -17,10 +18,31 @@
       <td>
         <a href="/categorias/<%= categoria.id %>"><%= categoria.nombre %></a>
       </td>
+      <td>
+        <a href="categorias/<%= categoria.id %>/edit">Edit</a>
+        <form
+          class="form-delete"
+          action="categorias/<%= categoria.id %>?_method=DELETE"
+          method="post"
+        >
+          <button type="submit">Borrar</button>
+        </form>
+      </td>
     </tr>
     <%}) %>
-    <!-- <tr>
+    <!-- <tr
       <td>Se completará dinamicamente</td>
     </tr> -->
   </tbody>
 </table>
+<!-- Ponemos un script de front-end que advierta al cliente si está seguro de borrar -->
+<script>
+  document.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (event.target.classList.contains("form-delete")) {
+      if (confirm("¿Esta seguro?")) {
+        event.target.submit();
+      }
+    }
+  });
+</script>

@@ -1,0 +1,14 @@
+<h1>Editar Categoría</h1>
+
+<form action="/categorias/<%= categoria.id %>?_method=PUT" method="post">
+  <div>
+    <label for="nombre">Nombre:</label>
+    <input
+      type="text"
+      name="nombre"
+      id="nombre"
+      value="<%= categoria.nombre %>"
+    />
+  </div>
+  <button type="submit">Grabo cambios</button>
+</form>

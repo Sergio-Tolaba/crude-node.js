@@ -5,6 +5,8 @@ const path = require("path");
 const layouts = require("express-ejs-layouts");
 
 const app = express(); //app es el servidor y es una instancia de express
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public"))); //aunque funcionó todo bien la ruta relativa, conviene colocar rutas absolutas y usamos join porque quiero unir
 
