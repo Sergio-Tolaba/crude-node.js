@@ -1,3 +1,69 @@
+body {
+  display: grid;
+  grid-template-rows: 50px 1f 50px;
+  min-height: 100vh;
+  max-width: 80vw;
+  margin: auto;
+}
+.button {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 0.25em 0.5em;
+  border: 1px solid gray;
+}
+.button:hover {
+  box-shadow: 1px 1px 5px gray;
+}
+.button--primary {
+  background-color: dodgerblue;
+  color: snow;
+}
+.button--danger {
+  padding: 0.4em 0.5em;
+  background-color: red;
+  color: snow;
+}
+.cell-inline {
+  display: flex;
+  gap: 0.25em;
+  border: none;
+}
+.form__group {
+  margin-bottom: 0.5em;
+}
+.form__input {
+  padding: 0.25em;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+a {
+  text-decoration: none;
+}
+ul,
+ol {
+  list-style: none;
+  padding-left: 0;
+}
+.categorias {
+  margin-top: 0.5em;
+}
+table,
+th,
+td {
+  border: 1px solid gray;
+  border-collapse: collapse;
+  padding: 0.5em;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.menu {
+  display: flex;
+  gap: 3em;
+}
 h1 {
   color: darkorange;
 }
@@ -5,4 +71,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5em;
+}
+footer {
+  text-align: center;
 }
