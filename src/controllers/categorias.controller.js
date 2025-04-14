@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 let categorias = []; //Array vacío+En store(save c/categoria=uso file siste y path)
 
-const model = rquire("../models/Category");
+const model = require("../models/category");
 
 //Create
 const create = (req, res) => {
@@ -26,33 +26,50 @@ const create = (req, res) => {
 const store = (req, res) => {
   const { name } = req.body; //Extraigo el nombre de la info del form create Ej
   //En db como sqlite nombre ahora es name
-  //TODO ESTO SE HACE PARA EL ARRAY
-  // const categoria = {
-  //   //Creo un objeto: Nueva Categoria//En db esto se hace en models
-  //   id: Date.now(),
-  //   nombre, //Asigno el nombre que agregó el frontend(Cliente) Ej Categoria 4
-  // };
-  // categorias.push(categoria); //Agrego al final del array la nueva categoría
-  // //Guardaremos el archivo de forma sincrónica(luego veremos la forma ascincrónica)
-  // fs.writeFileSync(
-  //   path.resolve(__dirname, "../../categorias.json"),
-  //   JSON.stringify(categorias)
-  // );
-  res.redirect("/categorias"); //Paso del form Create a la pagina de Listar Categorias
-}; //Veo la Categoría 4 pero sólo queda en memoria RAM
-
+  model.create(name, (error, id) => {
+    if (error) {
+      return res.status(500).send("Internal Server Error");
+    }
+    console.log(id);
+    res.redirect("/categorias");
+  });
+};
+//Paso del form Create a la pagina de Listar Categorias
+//Veo la Categoría 4 pero sólo queda en memoria RAM
+//TODO ESTO SE HACE PARA EL ARRAY
+// const categoria = {
+//   //Creo un objeto: Nueva Categoria//En db esto se hace en models
+//   id: Date.now(),
+//   nombre, //Asigno el nombre que agregó el frontend(Cliente) Ej Categoria 4
+// };
+// categorias.push(categoria); //Agrego al final del array la nueva categoría
+// //Guardaremos el archivo de forma sincrónica(luego veremos la forma ascincrónica)
+// fs.writeFileSync(
+//   path.resolve(__dirname, "../../categorias.json"),
+//   JSON.stringify(categorias)
+// );
+// res.redirect("/categorias"); //Paso del form Create a la pagina de Listar Categorias
+// }; //Veo la Categoría 4 pero sólo queda en memoria RAM
 //Read
 const index = (req, res) => {
-  try {
-    categorias = JSON.parse(
-      fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-    );
-  } catch (error) {
-    categorias = [];
-  }
-  //res.send("Listado de categorias");
-  res.render("categorias/index", { categorias }); //Views/categorias/index.ejs(table)
+  model.findAll((error, categorias) => {
+    if (error) {
+      return res.status(500).send("Internal Server Error");
+    }
+    res.render("categorias/index", { categorias });
+  });
 };
+
+//   try {
+//     categorias = JSON.parse(
+//       fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
+//     );
+//   } catch (error) {
+//     categorias = [];
+//   }
+//   //res.send("Listado de categorias");
+//   res.render("categorias/index", { categorias }); //Views/categorias/index.ejs(table)
+// };
 
 const show = (req, res) => {
   categorias = JSON.parse(
