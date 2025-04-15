@@ -1,0 +1,25 @@
+Luego de hacer una modificación en un producto (update), el console.log(result) aporta info que podría utilizarse en un mensaje para el cliente
+Estamos en producto.controller.js (donde tenemos esta función)
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body; //Voy a models para hacer la misma función update en Product.js
+  try {
+    const result = await model.update(id, name);
+    console.log(result); //vemos cuántos registros se modificaron o si hubo una modificación (se podría poner un mensaje Ej se modificó el registro tal)
+    res.redirect("/productos");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+----Consola o Shell --------
+http://localhost:3000
+{ id: 1, name: 'Producto Uno' }
+ResultSetHeader {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 0,
+  info: 'Rows matched: 1  Changed: 1  Warnings: 0',
+  serverStatus: 2,
+  warningStatus: 0,
+  changedRows: 1

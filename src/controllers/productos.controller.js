@@ -42,17 +42,73 @@ const index = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 };
-const show = (req, res) => {
+const show = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const producto = await model.findById(id);
+    console.log(producto);
+    if (producto == undefined) {
+      //if(!producto)
+      return res.status(404).send("Producto no encontrado");
+      //return res.status(404).json({error: "Producto no encontrado"})=> uso más en una API
+    }
+    res.render("productos/show", { producto });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
   //pro el prefijo;"/productos", req..dejo sólo "/:id"
   // ruta con parámetro(dinamico)
-  fetch("https://fakestoreapi.com/products/" + req.params.id)
-    .then((res) => res.json())
-    .then((productos) => res.send(productos));
+  // fetch("https://fakestoreapi.com/products/" + req.params.id)
+  //   .then((res) => res.json())
+  //   .then((productos) => res.send(productos));
 };
-
+//Copio todo lo que figura en la función show
+const edit = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const producto = await model.findById(id);
+    console.log(producto);
+    if (producto == undefined) {
+      //if(!producto)
+      return res.status(404).send("Producto no encontrado");
+      //return res.status(404).json({error: "Producto no encontrado"})=> uso más en una API
+    }
+    res.render("productos/edit", { producto }); //modifico show por edit y creo la vista edit.ejs (copio el edit.ejs de la vista categorias)
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body; //Voy a models para hacer la misma función update en Product.js
+  try {
+    const result = await model.update(id, name);
+    console.log(result); //vemos cuántos registros se modificaron o si hubo una modificación (se podría poner un mensaje Ej se modificó el registro tal)
+    res.redirect("/productos");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
+const destroy = async (req, res) => {
+  const { id } = req.params; //En este punto voy a models/Product.js=crear f destroy p/l db
+  try {
+    const result = await model.destroy(id);
+    console.log(result);
+    res.redirect("/productos");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
+};
 module.exports = {
   create,
   store,
   index,
   show,
+  edit,
+  update,
+  destroy,
 };
