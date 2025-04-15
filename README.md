@@ -1,13 +1,18 @@
 # CRUD con node.js
 
 ## Instalación
-``` shell
+
+```shell
 npm install
 
 ```
+
 ## Ejecutar
+
 ```shell
 
 npm run dev
 
 ```
+
+npm i mysql2

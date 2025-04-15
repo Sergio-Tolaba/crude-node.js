@@ -1,8 +1,8 @@
 <!-- Sabemos que acá sólo hay que agregar lo que iría dentro del main -->
-<h1>Listado de Categorías</h1>
-<!-- Cómo renderizo esta pagina, desde el controlador y cambio res.send('Listado de Categorias') -->
-<a class="button button--primary" href="/categorias/create"
-  >Crear una Categoría</a
+<h1>Listado de Productos</h1>
+<!-- Cómo renderizo esta pagina, desde el controlador y cambio res.send('Listado de productos') -->
+<a class="button button--primary" href="/productos/create"
+  >Crear una Producto</a
 >
 <section class="listados">
   <table>
@@ -15,21 +15,21 @@
       </tr>
     </thead>
     <tbody>
-      <!-- array de categorias.forEach para recorrerlo //No puedo mezclar js y html-->
-      <% categorias.forEach(categoria=>{ %>
+      <!-- array de productos.forEach para recorrerlo //No puedo mezclar js y html-->
+      <% productos.forEach(producto=>{ %>
       <tr>
         <td>
-          <a href="/categorias/<%= categoria.id %>"><%= categoria.name %></a>
+          <a href="/productos/<%= producto.id %>"><%= producto.name %></a>
         </td>
         <td class="cell-inline">
           <a
             class="button button--primary"
-            href="categorias/<%= categoria.id %>/edit"
+            href="productos/<%= producto.id %>/edit"
             >Edit</a
           >
           <form
             class="form-delete"
-            action="categorias/<%= categoria.id %>?_method=DELETE"
+            action="productos/<%= producto.id %>?_method=DELETE"
             method="post"
           >
             <button class="button button--danger" type="submit">Borrar</button>

@@ -20,8 +20,39 @@ const findAll = (callback) => {
     callback(null, rows);
   });
 };
-
+const findById = (id, callback) => {
+  const sql = `SELECT * FROM categories WHERE id=?`;
+  db.get(sql, [id], (error, row) => {
+    if (error) {
+      return callback(error);
+    }
+    callback(null, row);
+  });
+};
+const update = (id, name, callback) => {
+  //[name] o mejor aún un objeto{name}=>Cuando hay muchos datos
+  const sql = `UPDATE categories SET name = ? WHERE id = ?`;
+  db.run(sql, [name, id], function (error) {
+    //Importa respetar el orden de la consulta name=? y luego id=?
+    if (error) {
+      return callback(error);
+    }
+    callback(null, this.changes);
+  });
+};
+const destroy = (id, callback) => {
+  const sql = `DELETE FROM categories WHERE id = ?`;
+  db.run(sql, [id], function (error) {
+    if (error) {
+      return callback(error);
+    }
+    callback(null, this.changes);
+  });
+};
 module.exports = {
   create,
   findAll,
+  findById,
+  update,
+  destroy,
 };

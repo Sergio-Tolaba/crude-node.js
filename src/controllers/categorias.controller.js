@@ -4,9 +4,9 @@
 //   { id: 2, nombre: "Categoria 2b" },
 //   { id: 3, nombre: "Categoria 3" },
 // ];
-const fs = require("fs");
-const path = require("path");
-let categorias = []; //Array vacío+En store(save c/categoria=uso file siste y path)
+// const fs = require("fs");
+// const path = require("path");
+// let categorias = []; //Array vacío+En store(save c/categoria=uso file siste y path)
 
 const model = require("../models/category");
 
@@ -72,79 +72,120 @@ const index = (req, res) => {
 // };
 
 const show = (req, res) => {
-  categorias = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-  );
-  //res.send("Listado de categorias");
-  //categoria.router.js tendremos la ruta con el id y lo tengo que traer
-  const { id } = req.params; //luego busco cada id y lo comparo con el id del front-end
-  const categoria = categorias.find((categorias) => categorias.id == id);
-  //console.log(categoria);
-  //res.send("show");
-  if (!categoria) {
-    //Si No existe la categoría o cualquier cosa
-    return res.status(404).send("No existe la categoría");
-  }
-
-  res.render("categorias/show", { categoria }); //Views/categorias/index.ejs(table)
+  const { id } = req.params;
+  model.findById(id, (error, categoria) => {
+    if (error) {
+      return res.status(500).send("Internal Server Error");
+    }
+    if (!categoria) {
+      //Si No existe la categoría o cualquier cosa
+      return res.status(404).send("No existe la categoría");
+    }
+    res.render("categorias/show", { categoria });
+  });
 };
+// categorias = JSON.parse(
+//   fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
+// );
+//res.send("Listado de categorias");
+//categoria.router.js tendremos la ruta con el id y lo tengo que traer
+//const { id } = req.params; //luego busco cada id y lo comparo con el id del front-end
+// const categoria = categorias.find((categorias) => categorias.id == id);
+//console.log(categoria);
+//res.send("show");
+// if (!categoria) {
+//   //Si No existe la categoría o cualquier cosa
+//   return res.status(404).send("No existe la categoría");
+// }
+
+// res.render("categorias/show", { categoria }); //Views/categorias/index.ejs(table)
+// };
 //Update o Actualización, usamos la funcion edit
 const edit = (req, res) => {
-  categorias = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-  );
-  //res.send("EDIT ");
-  const { id } = req.params; //luego busco cada id y lo comparo con el id del front-end
-
-  const categoria = categorias.find((categorias) => categorias.id == id);
-  //res.send("show");
-  if (!categoria) {
-    //Si No existe la categoría
-    return res.status(404).send("No existe la categoría");
-  }
-  res.render("categorias/edit", { categoria });
+  const { id } = req.params;
+  model.findById(id, (error, categoria) => {
+    //copio el modelo de show y en res.render("categorias/~show~ edit", { categoria });
+    if (error) {
+      return res.status(500).send("Internal Server Error");
+    }
+    if (!categoria) {
+      //Si No existe la categoría o cualquier cosa
+      return res.status(404).send("No existe la categoría");
+    }
+    res.render("categorias/edit", { categoria });
+  });
 };
+//   categorias = JSON.parse(
+//     fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
+//   );
+//   //res.send("EDIT ");
+//   const { id } = req.params; //luego busco cada id y lo comparo con el id del front-end
+
+//   const categoria = categorias.find((categorias) => categorias.id == id);
+//   //res.send("show");
+//   if (!categoria) {
+//     //Si No existe la categoría
+//     return res.status(404).send("No existe la categoría");
+//   }
+//   res.render("categorias/edit", { categoria });
+// };
 const update = (req, res) => {
   //res.send("UPDATE");
-  categorias = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-  );
+  // categorias = JSON.parse(
+  //   fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
+  // );
   const { id } = req.params;
-  const { nombre } = req.body; //recibo la modificación del nombre de la categoría
-
-  const categoria = categorias.find((categorias) => categorias.id == id);
-  //res.send("show");
-  if (!categoria) {
-    //Si No existe la categoría
-    return res.status(404).send("No existe la categoría");
-  }
-  categoria.nombre = nombre;
-  fs.writeFileSync(
-    path.resolve(__dirname, "../../categorias.json"),
-    JSON.stringify(categorias)
-  );
-  res.redirect("/categorias");
+  const { name } = req.body; //recibo la modificación del nombre de la categoría
+  model.update(id, name, (error, changes) => {
+    if (error) {
+      return res.status(500).send("Internal Server Error");
+    }
+    // console.log(changes);//Podría haber intensión maliciosa y hay formas de evitarlo
+    res.redirect("/categorias");
+  });
 };
+// const categoria = categorias.find((categorias) => categorias.id == id);
+//res.send("show");
+// if (!categoria) {
+//   //Si No existe la categoría
+//   return res.status(404).send("No existe la categoría");
+// }
+//   categoria.nombre = nombre;
+//   fs.writeFileSync(
+//     path.resolve(__dirname, "../../categorias.json"),
+//     JSON.stringify(categorias)
+//   );
+//   res.redirect("/categorias");
+// };
 const destroy = (req, res) => {
   //delete es palabra reservada en JS
-  categorias = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
-  );
+  // categorias = JSON.parse(
+  //   fs.readFileSync(path.resolve(__dirname, "../../categorias.json"), "utf-8")
+  // );
   //res.send("DESTROY");
   const { id } = req.params;
-  const index = categorias.findIndex((categoria) => categoria.id == id);
-  if (index == -1) {
-    //Si no existe el indice
+  model.destroy(id, (error, changes) => {
+    if (error) {
+      return res.status(500).send("Internal Server Error");
+    }
+    // console.log(changes);//Hacker malicioso con F12 y modif html forzando cambiar el id a borrar: <form class="form-delete" action="categorias/1?_method=DELETE" method="post">
 
-    return res.status(404).send("No existe la categoría");
-  }
-  categorias.splice(index, 1); //A partir de este index, ctos borro?= sólo 1
-  fs.writeFileSync(
-    path.resolve(__dirname, "../../categorias.json"),
-    JSON.stringify(categorias)
-  );
-  res.redirect("/categorias");
+    res.redirect("/categorias");
+  });
 };
+//   const index = categorias.findIndex((categoria) => categoria.id == id);
+//   if (index == -1) {
+//     //Si no existe el indice
+
+//     return res.status(404).send("No existe la categoría");
+//   }
+//   categorias.splice(index, 1); //A partir de este index, ctos borro?= sólo 1
+//   fs.writeFileSync(
+//     path.resolve(__dirname, "../../categorias.json"),
+//     JSON.stringify(categorias)
+//   );
+//   res.redirect("/categorias");
+// };
 
 module.exports = {
   create,

@@ -1,3 +1,4 @@
+//npm i sqlite3
 const path = require("path");
 const sqlite = require("sqlite3");
 
