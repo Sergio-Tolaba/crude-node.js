@@ -7,9 +7,8 @@
 // const fs = require("fs");
 // const path = require("path");
 // let categorias = []; //Array vacío+En store(save c/categoria=uso file siste y path)
-
-const model = require("../models/category");
-
+//const model = require("../models/Category");
+const model = require("../models/Category");
 //Create
 const create = (req, res) => {
   try {
@@ -51,14 +50,25 @@ const store = (req, res) => {
 // res.redirect("/categorias"); //Paso del form Create a la pagina de Listar Categorias
 // }; //Veo la Categoría 4 pero sólo queda en memoria RAM
 //Read
-const index = (req, res) => {
-  model.findAll((error, categorias) => {
-    if (error) {
-      return res.status(500).send("Internal Server Error");
-    }
+
+const index = async (req, res) => {
+  try {
+    const categorias = await model.findAll();
+
     res.render("categorias/index", { categorias });
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Internal Server Error");
+  }
 };
+// const index = (req, res) => {
+//   model.findAll((error, categorias) => {
+//     if (error) {
+//       return res.status(500).send("Internal Server Error");
+//     }
+//     res.render("categorias/index", { categorias });
+//   });
+// };
 
 //   try {
 //     categorias = JSON.parse(

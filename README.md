@@ -16,3 +16,4 @@ npm run dev
 ```
 
 npm i mysql2
+npm i sequelize (ORM)
